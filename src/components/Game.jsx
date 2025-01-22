@@ -27,7 +27,6 @@ function Game() {
 
   const checker = (card) => {
     if (firstCard && card.name === firstCard.name) {
-      // Добавляем анимацию совпавшим карточкам
       updateCardState(firstCard.id, {
         passed: true,
         isFlipped: true,
@@ -40,7 +39,6 @@ function Game() {
       });
 
       setTimeout(() => {
-        // Убираем класс тряски после анимации
         updateCardState(firstCard.id, { isShaking: false });
         updateCardState(card.id, { isShaking: false });
       }, 500);
