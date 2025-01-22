@@ -15,19 +15,22 @@
   margin: auto;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   perspective: 1000px;
 }
 
 .memory-card {
   width: calc(25% - 10px);
   height: calc(33.333% - 10px);
-  margin: 5px;
+  margin: 15px;
   position: relative;
   transform: scale(1);
   transform-style: preserve-3d;
   transition: transform 0.5s;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .memory-card:active {
@@ -44,9 +47,9 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  border-radius: 10px;
   background: #374684;
   backface-visibility: hidden;
+  border-radius: 10px;
 }
 
 .front-face {
@@ -60,7 +63,7 @@
 } */
 .win-message {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 320px;
 }
 
 .win-message h2 {
@@ -81,4 +84,33 @@
 
 .win-message button:hover {
   background-color: #575a98;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5px, 0);
+  }
+  50% {
+    transform: translate(-5px, 0);
+  }
+  75% {
+    transform: translate(5px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Класс для тряски */
+.memory-card.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Класс для подсветки совпавших карточек */
+.memory-card.connected {
+  box-shadow: 0 0 15px 5px #dfeb83;
+  transition: box-shadow 0.5s ease-in-out;
 }

@@ -3,7 +3,9 @@ import backCard from "../assets/images/back-card-min.png";
 function Card({ card, onClick }) {
   return (
     <div
-      className={`memory-card${card.isFlipped ? " flip" : ""}`}
+      className={`memory-card${card.isFlipped ? " flip" : ""} ${
+        card.isShaking ? " shake" : ""
+      } ${card.passed ? " connected" : ""}`}
       onClick={onClick}
       style={{ order: card.order }}
       data-testid={card.id}

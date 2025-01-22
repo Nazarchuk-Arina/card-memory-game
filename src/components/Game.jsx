@@ -3,14 +3,12 @@ import Card from "./Card.jsx";
 import { cardsData } from "./cards.js";
 
 function Game() {
-  // States
   const [cardsState, setCardsState] = useState(cardsData);
   const [firstCard, setFirstCard] = useState(null);
   const [secondClick, setSecondClick] = useState(false);
   const [wait, setWait] = useState(false);
-  const [gameWon, setGameWon] = useState(false); // Новый стейт для отслеживания выигрыша
+  const [gameWon, setGameWon] = useState(false);
 
-  // Проверка, все ли карточки перевернуты
   const checkWin = (updatedCards) => {
     if (updatedCards.every((card) => card.passed)) {
       setGameWon(true);
@@ -22,15 +20,30 @@ function Game() {
       const updatedCards = prevState.map((card) =>
         card.id === cardId ? { ...card, ...updates } : card
       );
-      checkWin(updatedCards); // Проверяем выигрыш после обновления
+      checkWin(updatedCards);
       return updatedCards;
     });
   };
 
   const checker = (card) => {
     if (firstCard && card.name === firstCard.name) {
-      updateCardState(firstCard.id, { passed: true, isFlipped: true });
-      updateCardState(card.id, { passed: true, isFlipped: true });
+      // Добавляем анимацию совпавшим карточкам
+      updateCardState(firstCard.id, {
+        passed: true,
+        isFlipped: true,
+        isShaking: true,
+      });
+      updateCardState(card.id, {
+        passed: true,
+        isFlipped: true,
+        isShaking: true,
+      });
+
+      setTimeout(() => {
+        // Убираем класс тряски после анимации
+        updateCardState(firstCard.id, { isShaking: false });
+        updateCardState(card.id, { isShaking: false });
+      }, 500);
     } else {
       setWait(true);
       setTimeout(() => {
@@ -56,7 +69,6 @@ function Game() {
   };
 
   const resetGame = () => {
-    // Перезапуск игры: сбрасываем состояние карточек и стейты
     setCardsState(
       cardsData.map((card) => ({ ...card, isFlipped: false, passed: false }))
     );
@@ -74,6 +86,9 @@ function Game() {
             key={card.id}
             card={card}
             onClick={(e) => handleClick(e, card)}
+            className={`${card.isShaking ? "shake" : ""} ${
+              card.passed ? "connected" : ""
+            }`}
           />
         ))}
       </section>
